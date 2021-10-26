@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+
+class HelloWorld {
+    static void Main() {
+        var result = GetBracketsFromString("(( @");
+        Console.WriteLine(result);
+    }
+  
+    static string GetBracketsFromString(string s) {
+        var lowerStr = s.ToLower();
+        var resultString = "";
+       
+        var symbols = new Dictionary<char, int>(); //создаем словарик. ключ - символ, значение - его кол-во в строке 
+        
+        foreach(var ch in lowerStr) { //пробегаемся первый раз по исходной строке
+            if (!symbols.ContainsKey(ch)) { //если словарик не имеет такого символа
+                symbols[ch] = 1; //то создаем в нем элемент с символом в качестве ключа и значением 1 
+            } else {
+                symbols[ch]++; //иначе повышаем счетчик с этим символом
+            }
+        }
+        
+        foreach(var ch in lowerStr) { // второй раз пробегаемся по исходной строке
+            var isUniq = symbols[ch] == 1; //делаем проверку на уникальность
+            resultString += isUniq ? "(" : ")"; // и пишем нужный символ
+        }
+        
+        return resultString;
+    }
+}
